@@ -15,6 +15,8 @@ public class BillRizer {
   private Animation<TextureRegion> jumping;
   private Animation<TextureRegion> runningShooting;
   private Animation<TextureRegion> shootingUpDiaganol;
+  private Animation<TextureRegion> shootingDownDiagonal;
+  private Animation<TextureRegion> die;
   private float x, y;
 
   public BillRizer(Texture spriteSheet) {
@@ -24,6 +26,24 @@ public class BillRizer {
     running();
     runningShooting();
     shootingUpDiaganol();
+    shootingDownDiagonal();
+    die();
+  }
+
+  private void die() {
+    die = animation(0.5f,
+      region(16, 294, 32, 27),
+      region(55, 304, 48, 13)
+    );
+  }
+
+  private void shootingDownDiagonal() {
+    shootingDownDiagonal = animation(0.18f,
+      region(11, 225, 27, 42),
+      region(47, 225, 26, 42),
+      region(78, 225, 27,42),
+      region(116, 226, 26, 42)
+    );
   }
 
   private void shootingUpDiaganol() {
@@ -87,7 +107,7 @@ public class BillRizer {
 
   public void render(SpriteBatch batch) {
     stateTimer += Gdx.graphics.getDeltaTime();
-    TextureRegion currentFrame = shootingUpDiaganol.getKeyFrame(stateTimer, true);
+    TextureRegion currentFrame = die.getKeyFrame(stateTimer, true);
     batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() * 3, currentFrame.getRegionHeight() * 3);
   }
 
