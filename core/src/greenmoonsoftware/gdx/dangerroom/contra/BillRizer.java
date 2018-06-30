@@ -14,6 +14,7 @@ public class BillRizer {
   private Animation<TextureRegion> standingShooting;
   private Animation<TextureRegion> jumping;
   private Animation<TextureRegion> runningShooting;
+  private Animation<TextureRegion> shootingUpDiaganol;
   private float x, y;
 
   public BillRizer(Texture spriteSheet) {
@@ -22,6 +23,16 @@ public class BillRizer {
     jumping();
     running();
     runningShooting();
+    shootingUpDiaganol();
+  }
+
+  private void shootingUpDiaganol() {
+    shootingUpDiaganol = animation(0.18f,
+      region(8, 170, 28, 46),
+      region(47, 170, 23, 46),
+      region(70, 172, 28, 46),
+      region(107, 172, 24, 46)
+    );
   }
 
   private void runningShooting() {
@@ -34,29 +45,29 @@ public class BillRizer {
   }
 
   private void running() {
-    Array<TextureRegion> frames = new Array<TextureRegion>();
-    frames.add(region(7, 81, 30, 39));
-    frames.add(region(44, 81, 29, 39));
-    frames.add(region(78, 81, 34, 39));
-    frames.add(region(118, 81, 29, 39));
-    run = new Animation<TextureRegion>(0.18f, frames);
+    run = animation(0.18f,
+      region(7, 81, 30, 39),
+      region(44, 81, 29, 39),
+      region(78, 81, 34, 39),
+      region(118, 81, 29, 39)
+    );
   }
 
   private void standingShooting() {
-    Array<TextureRegion> frames = new Array<TextureRegion>();
-    frames.add(region(3, 2, 32, 40));
-    frames.add(region(41, 2, 32, 40));
-    frames.add(region(75, 2, 40, 40));
-    standingShooting = new Animation<TextureRegion>(0.1f, frames);
+    standingShooting = animation(0.1f,
+      region(3, 2, 32, 40),
+      region(41, 2, 32, 40),
+      region(75, 2, 40, 40)
+    );
   }
 
   private void jumping() {
-    Array<TextureRegion> frames = new Array<TextureRegion>();
-    frames.add(region(2, 49, 24, 20));
-    frames.add(region(30, 48, 20, 24));
-    frames.add(region(59, 48, 24, 20));
-    frames.add(region(93, 47, 20, 24));
-    jumping = new Animation<TextureRegion>(0.1f, frames);
+    jumping = animation(0.1f,
+      region(2, 49, 24, 20),
+      region(30, 48, 20, 24),
+      region(59, 48, 24, 20),
+      region(93, 47, 20, 24)
+    );
   }
 
   private Animation<TextureRegion> animation(float frameDuration, TextureRegion... regions) {
@@ -76,8 +87,8 @@ public class BillRizer {
 
   public void render(SpriteBatch batch) {
     stateTimer += Gdx.graphics.getDeltaTime();
-    TextureRegion currentFrame = runningShooting.getKeyFrame(stateTimer, true);
-    batch.draw(currentFrame, x, y);
+    TextureRegion currentFrame = shootingUpDiaganol.getKeyFrame(stateTimer, true);
+    batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() * 3, currentFrame.getRegionHeight() * 3);
   }
 
   private TextureRegion getFrame(float delta) {
