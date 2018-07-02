@@ -6,20 +6,26 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.dangerroom.contra.BillRizer;
 
 public class FirstRoomScreen implements Screen {
   private final GreenMoonGame game;
   private OrthographicCamera camera;
+  private Viewport gamePort;
+
   private BillRizer rizer;
 
   public FirstRoomScreen(GreenMoonGame game) {
     this.game = game;
 
     camera = new OrthographicCamera();
-    camera.setToOrtho(false, 800, 480);
+//    camera.setToOrtho(false, 800, 480);
     camera.update();
+
+    gamePort = new FitViewport(400 / 100, 245 / 100, camera);
 
     rizer = new BillRizer(new Texture(Gdx.files.internal("contra/Contra3Players.png")));
   }

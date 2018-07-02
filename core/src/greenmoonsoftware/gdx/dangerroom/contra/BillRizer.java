@@ -107,7 +107,7 @@ public class BillRizer {
 
   public void render(SpriteBatch batch) {
     stateTimer += Gdx.graphics.getDeltaTime();
-    TextureRegion currentFrame = die.getKeyFrame(stateTimer, true);
+    TextureRegion currentFrame = run.getKeyFrame(stateTimer, true);
     batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() * 3, currentFrame.getRegionHeight() * 3);
   }
 
