@@ -12,6 +12,7 @@ import greenmoonsoftware.gdx.GreenMoonGame;
 
 public class Box2dScreen implements Screen {
 
+  private static final int PPM = 32;
   private final GreenMoonGame game;
   private final OrthographicCamera camera;
   private final World world;
@@ -35,36 +36,45 @@ public class Box2dScreen implements Screen {
 
   private void defineGround() {
     BodyDef groundBodyDef = new BodyDef();
-    groundBodyDef.position.set(new Vector2(0, scale(10)));
+    groundBodyDef.position.set(new Vector2(0, toBox2d(10)));
 
     Body groundBody = world.createBody(groundBodyDef);
 
     PolygonShape groundBox = new PolygonShape();
-    groundBox.setAsBox(camera.viewportWidth, 10.0f);
+    groundBox.setAsBox(toBox2d(camera.viewportWidth), toBox2d(10.0f));
     groundBody.createFixture(groundBox, 0.0f);
     groundBox.dispose();
   }
 
   private void definePlayer() {
-    playerBody = defineCircle();
+//    playerBody = defineCircle();
+    playerBody = defineSquare();
   }
 
   private Body defineSquare() {
     BodyDef def = new BodyDef();
     def.type = BodyDef.BodyType.DynamicBody;
-    def.position.set(100, 300);
-    return null;
+    def.position.set(toBox2d(100), toBox2d(50));
+    def.fixedRotation = true;
+    Body body = world.createBody(def);
+
+    PolygonShape shape = new PolygonShape();
+    shape.setAsBox(toBox2d(32 / 2), toBox2d(32 / 2));
+
+    body.createFixture(shape, 1.0f);
+    shape.dispose();
+    return body;
   }
 
   private Body defineCircle() {
     BodyDef bodyDef = new BodyDef();
     bodyDef.type = BodyDef.BodyType.DynamicBody;
-    bodyDef.position.set(scale(100), scale(300));
+    bodyDef.position.set(toBox2d(100), toBox2d(300));
 
     Body circleBody = world.createBody(bodyDef);
 
     CircleShape circle = new CircleShape();
-    circle.setRadius(scale(6f));
+    circle.setRadius(toBox2d(6f));
 
     FixtureDef fixtureDef = new FixtureDef();
     fixtureDef.shape = circle;
@@ -97,33 +107,41 @@ public class Box2dScreen implements Screen {
 
   private void update(float delta) {
     updateCamera();
-    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+
+    float horizontalForce = 0;
+    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerBody.getLinearVelocity().x <= 2) {
       playerBody.applyLinearImpulse(0.8f, 0, playerBody.getPosition().x, playerBody.getPosition().y, true);
+      horizontalForce += 1;
     }
-    if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+    if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerBody.getLinearVelocity().x >= -2) {
       playerBody.applyLinearImpulse(-0.8f, 0, playerBody.getPosition().x, playerBody.getPosition().y, true);
+      horizontalForce -= 1;
     }
+    if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+      playerBody.applyForceToCenter(0, 25, false);
+    }
+//    playerBody.setLinearVelocity(horizontalForce * 5, playerBody.getLinearVelocity().y);
   }
 
   private void updateCamera() {
-    camera.position.x = scaleUp(playerBody.getPosition().x);
-    camera.position.y = scaleUp(playerBody.getPosition().y);
+    camera.position.x = fromBox2d(playerBody.getPosition().x);
+    camera.position.y = fromBox2d(playerBody.getPosition().y);
     camera.update();
   }
 
-  private float scale(float m) {
-    return m;
-//    return m / 32;
+  private float toBox2d(float m) {
+//    return m;
+    return m / PPM;
   }
 
-  private float scaleUp(float m) {
-    return m;
-//    return m * 32;
+  private float fromBox2d(float m) {
+//    return m;
+    return m * PPM;
   }
 
   private Matrix4 scale(Matrix4 combined) {
-//    combined.scl(32);
-    return combined;
+    return combined.scl(PPM);
+//    return combined;
   }
 
   @Override
