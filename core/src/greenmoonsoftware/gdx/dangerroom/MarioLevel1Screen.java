@@ -12,12 +12,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import greenmoonsoftware.gdx.GreenMoonGame;
+import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
 
 public class MarioLevel1Screen implements Screen, InputProcessor {
   Texture img;
-  TiledMap tiledMap;
   OrthographicCamera camera;
-  TiledMapRenderer tiledMapRenderer;
+  GreenMoonTiledRenderer mapRenderer;
 
   public MarioLevel1Screen(GreenMoonGame game) {
     float w = Gdx.graphics.getWidth();
@@ -26,8 +26,7 @@ public class MarioLevel1Screen implements Screen, InputProcessor {
     camera = new OrthographicCamera();
     camera.setToOrtho(false,w,h);
     camera.update();
-    tiledMap = new TmxMapLoader().load("mario/level1.tmx");
-    tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+    mapRenderer = new GreenMoonTiledRenderer("mario/level1.tmx");
     Gdx.input.setInputProcessor(this);
   }
 
@@ -42,8 +41,7 @@ public class MarioLevel1Screen implements Screen, InputProcessor {
     Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     camera.update();
-    tiledMapRenderer.setView(camera);
-    tiledMapRenderer.render();
+    mapRenderer.render(camera);
   }
 
   @Override
@@ -86,10 +84,6 @@ public class MarioLevel1Screen implements Screen, InputProcessor {
       camera.translate(0,-32);
     if(keycode == Input.Keys.DOWN)
       camera.translate(0,32);
-    if(keycode == Input.Keys.NUM_1)
-      tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
-    if(keycode == Input.Keys.NUM_2)
-      tiledMap.getLayers().get(1).setVisible(!tiledMap.getLayers().get(1).isVisible());
     return false;
   }
 
