@@ -40,4 +40,8 @@ public abstract class GreenMoonGame extends Game {
   public static interface BatchAction {
     void execute(SpriteBatch batch);
   }
+
+  public SpriteBatch getBatch() {
+    return batch;
+  }
 }

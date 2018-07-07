@@ -17,6 +17,7 @@ public class Box2dScreen implements Screen {
   private final OrthographicCamera camera;
   private final World world;
   private final Box2DDebugRenderer debugRenderer;
+  private final Hud hud;
 
   private Body playerBody;
 
@@ -26,6 +27,8 @@ public class Box2dScreen implements Screen {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800 / 2, 480 / 2);
     camera.update();
+
+    hud = new Hud(game, 800, 480);
 
     world = new World(new Vector2(0, -10), true);
     debugRenderer = new Box2DDebugRenderer();
@@ -100,6 +103,9 @@ public class Box2dScreen implements Screen {
 
     update(delta);
 
+    game.setProjectionMatrix(hud.stage.getCamera());
+    hud.stage.draw();
+
     debugRenderer.render(world, scale(camera.combined));
     //Step at the end of the render method
     world.step(1/60f, 6, 2);
@@ -107,6 +113,7 @@ public class Box2dScreen implements Screen {
 
   private void update(float delta) {
     updateCamera();
+    hud.update(delta);
 
     float horizontalForce = 0;
     if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerBody.getLinearVelocity().x <= 2) {
@@ -166,6 +173,6 @@ public class Box2dScreen implements Screen {
 
   @Override
   public void dispose() {
-
+    hud.dispose();
   }
 }
