@@ -27,24 +27,56 @@ public class Convert {
       "-230px -237px;", "-284px -237px;", BLANK,
       "-230px -318px;", "-284px -318px;", BLANK,
       "-230px -372px;", "-284px -372px;", BLANK,
-      "-284px -426px;", BLANK, BLANK
+      "", "-284px -426px;", BLANK,
+      "", "", ""
     };
+
+    String[] coordinatesGray = new String[]{
+      "-461px -237px;", "-515px -237px;", "-569px -237px;",
+      "-461px -291px;", "-515px -291px;", "-569px -291px;",
+      "-461px -345px;", "-515px -345px;", "-569px -345px;",
+      "-461px -399px;", "-515px -399px;", "-569px -399px;",
+      "", "", "-569px -453px;",
+      "-461px -507px;", "-515px -507px;", "-569px -507px;",
+      "", "", "-569px -561px;",
+      "-459px -638px;", "-513px -638px;", "-567px -638px;",
+      "", "", "-567px -692px;",
+      "-461px -762px;", "-515px -762px;", "-569px -762px;",
+      "", "", "-569px -816px;",
+      "-652px -237px;", "-706px -237px;", "",
+      "-652px -318px;", "-706px -318px;", "",
+      "-652px -372px;", "-706px -372px;", "",
+      "", "-706px -426px;", "",
+      "", "", ""
+    };
+    cmd.setSearchPath("/Users/robert/tmp/ImageMagick-7.0.7/bin");
 
     new File("tiles").mkdir();
     new File("tileRows").mkdir();
+    new File("tileOutputs").mkdir();
 
-    cmd.setSearchPath("/Users/robert/tmp/ImageMagick-7.0.7/bin");
+    set(coordinates, 1);
+    set(coordinatesGray, 2);
+
+    reallyAppendAll();
+  }
+
+  private static void set(String[] coordinates, int set) throws InterruptedException, IOException, IM4JavaException {
     int row = 0;
     for (int i = 0; i < coordinates.length; i++) {
-      extract(cmd, i, parse(coordinates[i]));
       if (i != 0 && i % 3 == 0) {
-        append(row, i-2, i-1, i);
+        append(row, i-3, i-2, i-1);
         row++;
       }
+      extract(cmd, i, parse(coordinates[i]));
     }
+    appendAll(row, set);
   }
 
   private static int[] parse(String coordinate) {
+    if ("".equals(coordinate)) {
+      coordinate = BLANK;
+    }
     String[] result = coordinate
       .replaceAll("-", "")
       .replaceAll("px", "")
@@ -66,11 +98,31 @@ public class Convert {
 
   private static void append(int row, int i, int i1, int i2) throws InterruptedException, IOException, IM4JavaException {
     IMOperation op = new IMOperation();
+    System.out.println("Row: " + row + "; " + i + ", " + i1 + ", " + i2);
     op.addImage("tiles/tile" + i + ".png");
     op.addImage("tiles/tile" + i1 + ".png");
     op.addImage("tiles/tile" + i2 + ".png");
     op.appendHorizontally();
     op.addImage("tileRows/row" + row + ".png");
+    cmd.run(op);
+  }
+
+  private static void appendAll(int row, int set) throws InterruptedException, IOException, IM4JavaException {
+    IMOperation op = new IMOperation();
+    for (int i = 0; i < row; i++) {
+      op.addImage("tileRows/row" + i + ".png");
+    }
+    op.appendVertically();
+    op.addImage("tileOutputs/tileset" + set + ".png");
+    cmd.run(op);
+  }
+
+  private static void reallyAppendAll() throws InterruptedException, IOException, IM4JavaException {
+    IMOperation op = new IMOperation();
+    op.addImage("tileOutputs/tileset1.png");
+    op.addImage("tileOutputs/tileset2.png");
+    op.appendHorizontally();
+    op.addImage("tileOutputs/tileset-final.png");
     cmd.run(op);
   }
 }
