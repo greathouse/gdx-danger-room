@@ -3,7 +3,7 @@ package greenmoonsoftware.gdx.dangerroom;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import greenmoonsoftware.gdx.GreenMoonGame;
 
-public class DangerRoom extends GreenMoonGame {
+public class DangerRoomGame extends GreenMoonGame {
 
 	private BitmapFont font;
 

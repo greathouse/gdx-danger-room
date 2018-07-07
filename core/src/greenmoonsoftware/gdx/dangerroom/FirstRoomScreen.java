@@ -22,7 +22,7 @@ public class FirstRoomScreen implements Screen {
     this.game = game;
 
     camera = new OrthographicCamera();
-//    camera.setToOrtho(false, 800, 480);
+    camera.setToOrtho(false, 800, 480);
     camera.update();
 
     gamePort = new FitViewport(400 / 100, 245 / 100, camera);
