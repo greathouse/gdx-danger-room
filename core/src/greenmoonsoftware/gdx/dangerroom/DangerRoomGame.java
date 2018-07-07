@@ -9,7 +9,7 @@ public class DangerRoomGame extends GreenMoonGame {
 
 	public void onCreate() {
 		font = new BitmapFont();
-		this.setScreen(new Box2dScreen(this));
+		this.setScreen(new MarioLevel1Screen(this));
 	}
 
 	public void render() {
