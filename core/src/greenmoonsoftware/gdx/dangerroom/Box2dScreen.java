@@ -5,6 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -19,6 +23,9 @@ public class Box2dScreen implements Screen {
   private final Box2DDebugRenderer debugRenderer;
   private final Hud hud;
 
+  TiledMap tiledMap;
+  TiledMapRenderer tiledMapRenderer;
+
   private Body playerBody;
 
   public Box2dScreen(GreenMoonGame game) {
@@ -32,6 +39,9 @@ public class Box2dScreen implements Screen {
 
     world = new World(new Vector2(0, -10), true);
     debugRenderer = new Box2DDebugRenderer();
+
+    tiledMap = new TmxMapLoader().load("mario/level1.tmx");
+    tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
     definePlayer();
     defineGround();
@@ -130,6 +140,9 @@ public class Box2dScreen implements Screen {
     camera.position.x = fromBox2d(playerBody.getPosition().x);
     camera.position.y = fromBox2d(playerBody.getPosition().y);
     camera.update();
+
+    tiledMapRenderer.setView(camera);
+    tiledMapRenderer.render();
   }
 
   private float toBox2d(float m) {
