@@ -133,18 +133,15 @@ public class Box2dScreen implements Screen {
   }
 
   private float toBox2d(float m) {
-//    return m;
     return m / PPM;
   }
 
   private float fromBox2d(float m) {
-//    return m;
     return m * PPM;
   }
 
   private Matrix4 scale(Matrix4 combined) {
     return combined.scl(PPM);
-//    return combined;
   }
 
   @Override
