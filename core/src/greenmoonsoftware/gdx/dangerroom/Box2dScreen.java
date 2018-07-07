@@ -77,12 +77,12 @@ public class Box2dScreen implements Screen {
     Body circleBody = world.createBody(bodyDef);
 
     CircleShape circle = new CircleShape();
-    circle.setRadius(toBox2d(6f));
+    circle.setRadius(toBox2d(16f));
 
     FixtureDef fixtureDef = new FixtureDef();
     fixtureDef.shape = circle;
-    fixtureDef.density = 0.5f;
-    fixtureDef.friction = 0.4f;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 1.0f;
     fixtureDef.restitution = 0.1f; // Make it bounce a little bit
 
     Fixture fixture = circleBody.createFixture(fixtureDef);
@@ -115,19 +115,15 @@ public class Box2dScreen implements Screen {
     updateCamera();
     hud.update(delta);
 
-    float horizontalForce = 0;
     if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerBody.getLinearVelocity().x <= 2) {
       playerBody.applyLinearImpulse(0.8f, 0, playerBody.getPosition().x, playerBody.getPosition().y, true);
-      horizontalForce += 1;
     }
     if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerBody.getLinearVelocity().x >= -2) {
       playerBody.applyLinearImpulse(-0.8f, 0, playerBody.getPosition().x, playerBody.getPosition().y, true);
-      horizontalForce -= 1;
     }
     if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-      playerBody.applyForceToCenter(0, 25, false);
+      playerBody.applyForceToCenter(0, 300, true);
     }
-//    playerBody.setLinearVelocity(horizontalForce * 5, playerBody.getLinearVelocity().y);
   }
 
   private void updateCamera() {
