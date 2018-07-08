@@ -20,7 +20,7 @@ public class GreenMoonTiledRenderer {
     this.game = game;
     map = new TmxMapLoader().load(resource);
     this.world = game.getWorld();
-    tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/25f);
+    tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/50f);
   }
 
   public void render(OrthographicCamera camera) {

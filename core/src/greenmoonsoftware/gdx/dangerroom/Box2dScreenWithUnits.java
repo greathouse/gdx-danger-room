@@ -109,8 +109,8 @@ public class Box2dScreenWithUnits implements Screen {
   }
 
   private void updateCamera() {
-//    camera.position.x = game.fromBox2d(playerBody.getPosition().x);
-//    camera.position.y = game.fromBox2d(playerBody.getPosition().y);
+//    camera.position.x = playerBody.getPosition().x;
+//    camera.position.y = playerBody.getPosition().y;
 //    camera.update();
 
     mapRenderer.render(camera);

@@ -114,12 +114,21 @@ public class BillRizer extends Sprite {
   public void render(SpriteBatch batch) {
     stateTimer += Gdx.graphics.getDeltaTime();
     TextureRegion currentFrame = run.getKeyFrame(stateTimer, true);
-    System.out.println("(Render) Bill: " + x + "x" + y);
     batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() / 34, currentFrame.getRegionHeight() / 39);
   }
 
   private TextureRegion getFrame(float delta) {
     stateTimer += delta;
     return run.getKeyFrame(stateTimer, true);
+  }
+
+  @Override
+  public float getX() {
+    return x;
+  }
+
+  @Override
+  public float getY() {
+    return y;
   }
 }
