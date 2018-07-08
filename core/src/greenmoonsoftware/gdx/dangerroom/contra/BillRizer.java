@@ -41,26 +41,26 @@ public class BillRizer extends Sprite {
   private void shootingDownDiagonal() {
     shootingDownDiagonal = animation(0.18f,
       region(11, 225, 27, 42),
-      region(47, 225, 26, 42),
+      region(47, 225, 27, 42),
       region(78, 225, 27,42),
-      region(116, 226, 26, 42)
+      region(116, 226, 27, 42)
     );
   }
 
   private void shootingUpDiaganol() {
     shootingUpDiaganol = animation(0.18f,
       region(8, 170, 28, 46),
-      region(47, 170, 23, 46),
+      region(45, 170, 28, 46),
       region(70, 172, 28, 46),
-      region(107, 172, 24, 46)
+      region(105, 172, 28, 46)
     );
   }
 
   private void runningShooting() {
-    runningShooting = animation( 0.1f,
+    runningShooting = animation( 0.18f,
       region(7, 126, 40, 40),
       region(47, 126, 40, 40),
-      region(90, 126, 41, 40),
+      region(90, 126, 40, 40),
       region(134, 126, 40, 40)
     );
   }
@@ -102,19 +102,19 @@ public class BillRizer extends Sprite {
   }
 
   public BillRizer update(float delta, float x, float y) {
-    System.out.println("(Update) Bill: " + x + "x" + y);
     setBounds(x - getWidth() / 2,y - getHeight() / 2,1,1);
     setOriginCenter();
     setRegion(getFrame(delta));
-    this.x = x;
-    this.y = y;
+    this.x = 10 - getWidth() / 2;
+    this.y = 5 - getHeight() / 2;
+
     return this;
   }
 
   public void render(SpriteBatch batch) {
     stateTimer += Gdx.graphics.getDeltaTime();
-    TextureRegion currentFrame = run.getKeyFrame(stateTimer, true);
-    batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() / 34, currentFrame.getRegionHeight() / 39);
+    TextureRegion currentFrame = runningShooting.getKeyFrame(stateTimer, true);
+    batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() / 40, currentFrame.getRegionHeight() / 40);
   }
 
   private TextureRegion getFrame(float delta) {
