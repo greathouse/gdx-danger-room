@@ -20,7 +20,7 @@ public class GreenMoonTiledRenderer {
     this.game = game;
     map = new TmxMapLoader().load(resource);
     this.world = game.getWorld();
-    tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+    tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/50f);
   }
 
   public void render(OrthographicCamera camera) {
@@ -41,11 +41,14 @@ public class GreenMoonTiledRenderer {
       Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
       bdef.type = BodyDef.BodyType.StaticBody;
-      bdef.position.set(game.toBox2d(rect.getX() + rect.getWidth() / 2), game.toBox2d(rect.getY() + rect.getHeight() / 2));
+      float x = game.toBox2d(rect.getX() / 50 + rect.getWidth() / 50 / 2);
+      float y = game.toBox2d(rect.getY() / 50 + rect.getHeight() / 50 / 2);
+//      System.out.println("Rectangle: " + rect.getWidth() + "x" + rect.getHeight() + " : " + rect.getX() + "," + rect.getY() + " (" + x + "," + y + ")");
+      bdef.position.set(x, y);
 
       body = world.createBody(bdef);
 
-      shape.setAsBox(game.toBox2d(rect.getWidth() / 2), game.toBox2d(rect.getHeight() / 2));
+      shape.setAsBox(game.toBox2d(rect.getWidth() / 50 / 2), game.toBox2d(rect.getHeight() / 50 / 2));
       fdef.shape = shape;
       body.createFixture(fdef);
     }

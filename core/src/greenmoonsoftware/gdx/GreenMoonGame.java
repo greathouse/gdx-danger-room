@@ -93,6 +93,11 @@ public abstract class GreenMoonGame extends Game {
     return this;
   }
 
+  public GreenMoonGame setScale(int scale) {
+    this.scale = scale;
+    return this;
+  }
+
   public interface BatchAction {
     void execute(SpriteBatch batch);
   }
