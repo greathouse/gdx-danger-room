@@ -100,9 +100,10 @@ public class BillRizer {
     return new TextureRegion(this.spriteSheet, x, y, width, height);
   }
 
-  public void update(float delta) {
-    x = 100;
-    y = 100;
+  public BillRizer update(float delta, float x, float y) {
+    this.x = x;
+    this.y = y;
+    return this;
   }
 
   public void render(SpriteBatch batch) {

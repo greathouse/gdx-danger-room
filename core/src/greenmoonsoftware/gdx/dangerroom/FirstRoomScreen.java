@@ -35,7 +35,6 @@ public class FirstRoomScreen implements Screen {
     update(delta);
     Gdx.gl.glClearColor(0, 0, 0.2f, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    // tell the camera to update its matrices.
     camera.update();
 
     game.setProjectionMatrix(camera);
@@ -49,7 +48,7 @@ public class FirstRoomScreen implements Screen {
   }
 
   private void update(float delta) {
-    rizer.update(delta);
+    rizer.update(delta, 100, 100);
   }
 
   @Override

@@ -5,9 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.*;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
+import greenmoonsoftware.gdx.dangerroom.contra.BillRizer;
 
 public class Box2dScreen implements Screen {
 
@@ -19,6 +22,8 @@ public class Box2dScreen implements Screen {
   private GreenMoonTiledRenderer mapRenderer;
 
   private Body playerBody;
+
+  private BillRizer rizer;
 
   public Box2dScreen(GreenMoonGame game) {
     this.game = game.enableDebugRendering();
@@ -32,6 +37,7 @@ public class Box2dScreen implements Screen {
     mapRenderer = new GreenMoonTiledRenderer("gunner/Room1.tmx", game);
 
     definePlayer();
+    rizer = new BillRizer(new Texture(Gdx.files.internal("contra/Contra3Players.png")));
   }
 
   private void definePlayer() {
@@ -72,9 +78,16 @@ public class Box2dScreen implements Screen {
     game.setProjectionMatrix(hud.stage.getCamera());
     hud.stage.draw();
 
+    rizer.update(delta, game.fromBox2d(playerBody.getPosition().x), game.fromBox2d(playerBody.getPosition().y));
+    game.doInBatch(new GreenMoonGame.BatchAction() {
+      @Override
+      public void execute(SpriteBatch batch) {
+        rizer.render(batch);
+      }
+    });
+
     game.render(camera);
-    //Step at the end of the render method
-    game.step(1/60f, 6, 2);
+    game.step(Gdx.graphics.getDeltaTime(), 6, 2);
   }
 
   private void update(float delta) {
