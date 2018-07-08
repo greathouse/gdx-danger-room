@@ -103,9 +103,8 @@ public class BillRizer extends Sprite {
 
   public BillRizer update(float delta, float x, float y) {
     System.out.println("(Update) Bill: " + x + "x" + y);
-    setBounds(0,0,1,1);
+    setBounds(x - getWidth() / 2,y - getHeight() / 2,1,1);
     setOriginCenter();
-    setPosition(x, y);
     setRegion(getFrame(delta));
     this.x = x;
     this.y = y;
