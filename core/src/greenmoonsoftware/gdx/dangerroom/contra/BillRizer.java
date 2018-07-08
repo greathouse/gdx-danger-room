@@ -199,17 +199,13 @@ public class BillRizer extends Sprite {
     return this;
   }
 
-  public Vector2 getPosition() {
-    return playerBody.getPosition();
-  }
-
   @Override
   public float getX() {
-    return x;
+    return playerBody.getPosition().x;
   }
 
   @Override
   public float getY() {
-    return y;
+    return playerBody.getPosition().y;
   }
 }

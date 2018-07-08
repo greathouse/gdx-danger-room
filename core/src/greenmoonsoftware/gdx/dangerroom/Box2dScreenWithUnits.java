@@ -80,8 +80,8 @@ public class Box2dScreenWithUnits implements Screen {
   }
 
   private void updateCamera() {
-    camera.position.x = rizer.getPosition().x;
-    camera.position.y = rizer.getPosition().y;
+    camera.position.x = rizer.getX();
+    camera.position.y = rizer.getY();
     camera.update();
     mapRenderer.render(camera);
   }
