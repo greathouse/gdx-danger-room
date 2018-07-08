@@ -20,7 +20,7 @@ public class GreenMoonTiledRenderer {
     this.game = game;
     map = new TmxMapLoader().load(resource);
     this.world = game.getWorld();
-    tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/50f);
+    tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/25f);
   }
 
   public void render(OrthographicCamera camera) {
@@ -43,7 +43,6 @@ public class GreenMoonTiledRenderer {
       bdef.type = BodyDef.BodyType.StaticBody;
       float x = game.toBox2d(rect.getX() / 50 + rect.getWidth() / 50 / 2);
       float y = game.toBox2d(rect.getY() / 50 + rect.getHeight() / 50 / 2);
-//      System.out.println("Rectangle: " + rect.getWidth() + "x" + rect.getHeight() + " : " + rect.getX() + "," + rect.getY() + " (" + x + "," + y + ")");
       bdef.position.set(x, y);
 
       body = world.createBody(bdef);

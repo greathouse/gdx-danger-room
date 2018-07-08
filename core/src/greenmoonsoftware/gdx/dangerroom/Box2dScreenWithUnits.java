@@ -50,12 +50,12 @@ public class Box2dScreenWithUnits implements Screen {
   private Body defineSquare() {
     BodyDef def = new BodyDef();
     def.type = BodyDef.BodyType.DynamicBody;
-    def.position.set(10, 10);
+    def.position.set(5, 10);
     def.fixedRotation = true;
     Body body = game.createBody(def);
 
     PolygonShape shape = new PolygonShape();
-    shape.setAsBox(1, 1);
+    shape.setAsBox(.5f, .5f);
 
     FixtureDef fixtureDef = new FixtureDef();
     fixtureDef.shape = shape;
@@ -81,13 +81,13 @@ public class Box2dScreenWithUnits implements Screen {
     game.setProjectionMatrix(hud.stage.getCamera());
     hud.stage.draw();
 
-//    rizer.update(delta, game.fromBox2d(playerBody.getPosition().x), game.fromBox2d(playerBody.getPosition().y));
-//    game.doInBatch(new GreenMoonGame.BatchAction() {
-//      @Override
-//      public void execute(SpriteBatch batch) {
-//        rizer.render(batch);
-//      }
-//    });
+    rizer.update(delta, game.fromBox2d(playerBody.getPosition().x), game.fromBox2d(playerBody.getPosition().y));
+    game.doInBatch(new GreenMoonGame.BatchAction() {
+      @Override
+      public void execute(SpriteBatch batch) {
+        rizer.draw(batch);
+      }
+    });
 
     game.render(camera);
     game.step(Gdx.graphics.getDeltaTime(), 6, 2);

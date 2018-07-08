@@ -3,11 +3,12 @@ package greenmoonsoftware.gdx.dangerroom.contra;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-public class BillRizer {
+public class BillRizer extends Sprite {
   private Texture spriteSheet;
   private float stateTimer = 0f;
   private Animation<TextureRegion> run;
@@ -66,10 +67,10 @@ public class BillRizer {
 
   private void running() {
     run = animation(0.18f,
-      region(7, 81, 30, 39),
-      region(44, 81, 29, 39),
+      region(5, 81, 34, 39),
+      region(42, 81, 34, 39),
       region(78, 81, 34, 39),
-      region(118, 81, 29, 39)
+      region(116, 81, 34, 39)
     );
   }
 
@@ -101,6 +102,11 @@ public class BillRizer {
   }
 
   public BillRizer update(float delta, float x, float y) {
+    System.out.println("(Update) Bill: " + x + "x" + y);
+    setBounds(0,0,1,1);
+    setOriginCenter();
+    setPosition(x, y);
+    setRegion(getFrame(delta));
     this.x = x;
     this.y = y;
     return this;
@@ -109,7 +115,8 @@ public class BillRizer {
   public void render(SpriteBatch batch) {
     stateTimer += Gdx.graphics.getDeltaTime();
     TextureRegion currentFrame = run.getKeyFrame(stateTimer, true);
-    batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() * 3, currentFrame.getRegionHeight() * 3);
+    System.out.println("(Render) Bill: " + x + "x" + y);
+    batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() / 34, currentFrame.getRegionHeight() / 39);
   }
 
   private TextureRegion getFrame(float delta) {
