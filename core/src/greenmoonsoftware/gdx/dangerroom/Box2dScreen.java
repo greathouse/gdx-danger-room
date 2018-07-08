@@ -13,7 +13,7 @@ public class Box2dScreen implements Screen {
 
   private final GreenMoonGame game;
   private final OrthographicCamera camera;
-  private final Box2DDebugRenderer debugRenderer;
+
   private final Hud hud;
 
   private GreenMoonTiledRenderer mapRenderer;
@@ -21,15 +21,13 @@ public class Box2dScreen implements Screen {
   private Body playerBody;
 
   public Box2dScreen(GreenMoonGame game) {
-    this.game = game;
+    this.game = game.enableDebugRendering();
 
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800 / 2, 480 / 2);
     camera.update();
 
     hud = new Hud(game, 800, 480);
-
-    debugRenderer = new Box2DDebugRenderer();
 
     mapRenderer = new GreenMoonTiledRenderer("gunner/Room1.tmx", game);
 
@@ -74,7 +72,7 @@ public class Box2dScreen implements Screen {
     game.setProjectionMatrix(hud.stage.getCamera());
     hud.stage.draw();
 
-    debugRenderer.render(game.getWorld(), game.scale(camera.combined));
+    game.render(camera);
     //Step at the end of the render method
     game.step(1/60f, 6, 2);
   }

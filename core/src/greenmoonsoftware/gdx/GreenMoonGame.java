@@ -7,12 +7,16 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
 public abstract class GreenMoonGame extends Game {
   private SpriteBatch batch;
   private World world;
   private int scale = 32;
+
+  private Box2DDebugRenderer debugRenderer;
+  private boolean isDebugRendererEnabled = false;
 
   protected void onDispose(){}
   protected void onCreate(){}
@@ -37,7 +41,14 @@ public abstract class GreenMoonGame extends Game {
   public final void create() {
     batch = new SpriteBatch();
     world = createWorld();
+    debugRenderer = new Box2DDebugRenderer();
     onCreate();
+  }
+
+  public void render(Camera camera) {
+    if (isDebugRendererEnabled) {
+      debugRenderer.render(world, scale(camera.combined));
+    }
   }
 
   protected World createWorld() {
@@ -75,6 +86,11 @@ public abstract class GreenMoonGame extends Game {
   public final void dispose() {
     onDispose();
     batch.dispose();
+  }
+
+  public GreenMoonGame enableDebugRendering() {
+    this.isDebugRendererEnabled = true;
+    return this;
   }
 
   public interface BatchAction {
