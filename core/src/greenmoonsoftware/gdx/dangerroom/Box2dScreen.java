@@ -17,7 +17,7 @@ import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
 
 public class Box2dScreen implements Screen {
 
-  private static final int PPM = 32;
+  public static final int PPM = 32;
   private final GreenMoonGame game;
   private final OrthographicCamera camera;
   private final World world;
@@ -40,10 +40,10 @@ public class Box2dScreen implements Screen {
     world = new World(new Vector2(0, -10), true);
     debugRenderer = new Box2DDebugRenderer();
 
-    mapRenderer = new GreenMoonTiledRenderer("mario/level1.tmx");
+    mapRenderer = new GreenMoonTiledRenderer("gunner/Room1.tmx", world);
 
     definePlayer();
-    defineGround();
+//    defineGround();
   }
 
   private void defineGround() {

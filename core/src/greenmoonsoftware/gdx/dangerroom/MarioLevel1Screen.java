@@ -7,10 +7,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
 
@@ -26,7 +22,7 @@ public class MarioLevel1Screen implements Screen, InputProcessor {
     camera = new OrthographicCamera();
     camera.setToOrtho(false,w,h);
     camera.update();
-    mapRenderer = new GreenMoonTiledRenderer("mario/level1.tmx");
+    mapRenderer = new GreenMoonTiledRenderer("mario/level1.tmx", null);
     Gdx.input.setInputProcessor(this);
   }
 

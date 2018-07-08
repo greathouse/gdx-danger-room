@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="50" tileheight="50" infinite="0" nextobjectid="2">
+ <tileset firstgid="1" source="tileset-final.tsx"/>
+ <layer name="Graphics" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+1,2,2,2,2,2,2,2,2,3
+</data>
+ </layer>
+ <objectgroup name="Ground">
+  <object id="1" x="0" y="450" width="500" height="50"/>
+ </objectgroup>
+</map>
