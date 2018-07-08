@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
@@ -16,7 +15,6 @@ public class Box2dScreen implements Screen {
   public static final int PPM = 32;
   private final GreenMoonGame game;
   private final OrthographicCamera camera;
-  private final World world;
   private final Box2DDebugRenderer debugRenderer;
   private final Hud hud;
 
@@ -33,10 +31,9 @@ public class Box2dScreen implements Screen {
 
     hud = new Hud(game, 800, 480);
 
-    world = new World(new Vector2(0, -10), true);
     debugRenderer = new Box2DDebugRenderer();
 
-    mapRenderer = new GreenMoonTiledRenderer("gunner/Room1.tmx", world);
+    mapRenderer = new GreenMoonTiledRenderer("gunner/Room1.tmx", game);
 
     definePlayer();
   }
@@ -50,7 +47,7 @@ public class Box2dScreen implements Screen {
     def.type = BodyDef.BodyType.DynamicBody;
     def.position.set(toBox2d(100), toBox2d(50));
     def.fixedRotation = true;
-    Body body = world.createBody(def);
+    Body body = game.createBody(def);
 
     PolygonShape shape = new PolygonShape();
     shape.setAsBox(toBox2d(32 / 2), toBox2d(32 / 2));
@@ -79,9 +76,9 @@ public class Box2dScreen implements Screen {
     game.setProjectionMatrix(hud.stage.getCamera());
     hud.stage.draw();
 
-    debugRenderer.render(world, scale(camera.combined));
+    debugRenderer.render(game.getWorld(), scale(camera.combined));
     //Step at the end of the render method
-    world.step(1/60f, 6, 2);
+    game.step(1/60f, 6, 2);
   }
 
   private void update(float delta) {

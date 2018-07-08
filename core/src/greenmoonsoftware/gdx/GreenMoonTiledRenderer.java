@@ -17,9 +17,9 @@ public class GreenMoonTiledRenderer {
   private TiledMap map;
   private TiledMapRenderer tiledMapRenderer;
 
-  public GreenMoonTiledRenderer(String resource, World world) {
+  public GreenMoonTiledRenderer(String resource, GreenMoonGame game) {
     map = new TmxMapLoader().load(resource);
-    this.world = world;
+    this.world = game.getWorld();
     tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
   }
 
