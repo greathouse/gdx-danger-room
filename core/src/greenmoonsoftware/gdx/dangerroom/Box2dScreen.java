@@ -5,10 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -43,23 +39,9 @@ public class Box2dScreen implements Screen {
     mapRenderer = new GreenMoonTiledRenderer("gunner/Room1.tmx", world);
 
     definePlayer();
-//    defineGround();
-  }
-
-  private void defineGround() {
-    BodyDef groundBodyDef = new BodyDef();
-    groundBodyDef.position.set(new Vector2(0, toBox2d(10)));
-
-    Body groundBody = world.createBody(groundBodyDef);
-
-    PolygonShape groundBox = new PolygonShape();
-    groundBox.setAsBox(toBox2d(camera.viewportWidth), toBox2d(10.0f));
-    groundBody.createFixture(groundBox, 0.0f);
-    groundBox.dispose();
   }
 
   private void definePlayer() {
-//    playerBody = defineCircle();
     playerBody = defineSquare();
   }
 
@@ -73,31 +55,13 @@ public class Box2dScreen implements Screen {
     PolygonShape shape = new PolygonShape();
     shape.setAsBox(toBox2d(32 / 2), toBox2d(32 / 2));
 
-    body.createFixture(shape, 1.0f);
+    FixtureDef fixtureDef = new FixtureDef();
+    fixtureDef.shape = shape;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 6.0f;
+    body.createFixture(fixtureDef);
     shape.dispose();
     return body;
-  }
-
-  private Body defineCircle() {
-    BodyDef bodyDef = new BodyDef();
-    bodyDef.type = BodyDef.BodyType.DynamicBody;
-    bodyDef.position.set(toBox2d(100), toBox2d(300));
-
-    Body circleBody = world.createBody(bodyDef);
-
-    CircleShape circle = new CircleShape();
-    circle.setRadius(toBox2d(16f));
-
-    FixtureDef fixtureDef = new FixtureDef();
-    fixtureDef.shape = circle;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = 1.0f;
-    fixtureDef.restitution = 0.1f; // Make it bounce a little bit
-
-    Fixture fixture = circleBody.createFixture(fixtureDef);
-
-    circle.dispose();
-    return circleBody;
   }
 
   @Override
@@ -124,14 +88,14 @@ public class Box2dScreen implements Screen {
     updateCamera();
     hud.update(delta);
 
-    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerBody.getLinearVelocity().x <= 2) {
+    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerBody.getLinearVelocity().x <= 5) {
       playerBody.applyLinearImpulse(0.8f, 0, playerBody.getPosition().x, playerBody.getPosition().y, true);
     }
-    if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerBody.getLinearVelocity().x >= -2) {
+    if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerBody.getLinearVelocity().x >= -5) {
       playerBody.applyLinearImpulse(-0.8f, 0, playerBody.getPosition().x, playerBody.getPosition().y, true);
     }
     if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-      playerBody.applyForceToCenter(0, 300, true);
+      playerBody.applyForceToCenter(0, 400, true);
     }
   }
 
