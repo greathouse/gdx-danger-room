@@ -26,18 +26,24 @@ public class BillRizer extends Sprite {
   private Animation<TextureRegion> shootingUpDiaganol;
   private Animation<TextureRegion> shootingDownDiagonal;
   private Animation<TextureRegion> die;
+  private Animation<TextureRegion> stand;
+
+  private Animation<TextureRegion> currentAnimation;
   private float x, y;
 
+  private boolean isRight = true;
 
 
   public BillRizer(GreenMoonGame game, Texture spriteSheet) {
     this.game = game;
     this.spriteSheet = spriteSheet;
     defineAnimations();
+    currentAnimation = stand;
     playerBody = defineBody();
   }
 
   private void defineAnimations() {
+    stand();
     standingShooting();
     jumping();
     running();
@@ -45,6 +51,11 @@ public class BillRizer extends Sprite {
     shootingUpDiaganol();
     shootingDownDiagonal();
     die();
+  }
+
+  private void stand() {
+    stand = animation(0.0f, region(3, 2, 32, 40));
+    stand.setPlayMode(Animation.PlayMode.NORMAL);
   }
 
   private void die() {
@@ -131,7 +142,13 @@ public class BillRizer extends Sprite {
 
   public void render(SpriteBatch batch) {
     stateTimer += Gdx.graphics.getDeltaTime();
-    TextureRegion currentFrame = shootingDownDiagonal.getKeyFrame(stateTimer, true);
+    TextureRegion currentFrame = currentAnimation.getKeyFrame(stateTimer, true);
+    if (currentFrame.isFlipX() && isRight) {
+      currentFrame.flip(true, false);
+    }
+    if (!currentFrame.isFlipX() && !isRight) {
+      currentFrame.flip(true, false);
+    }
     batch.draw(currentFrame, x, y, 1, 1);
   }
 
@@ -160,6 +177,8 @@ public class BillRizer extends Sprite {
   }
 
   public BillRizer moveRight() {
+    isRight = true;
+    currentAnimation = run;
     if (playerBody.getLinearVelocity().x <= 5) {
       playerBody.applyLinearImpulse(new Vector2(0.8f, 0), playerBody.getWorldCenter(), true);
     }
@@ -167,6 +186,8 @@ public class BillRizer extends Sprite {
   }
 
   public BillRizer moveLeft() {
+    isRight = false;
+    currentAnimation = run;
     if (playerBody.getLinearVelocity().x >= -5) {
       playerBody.applyLinearImpulse(new Vector2(-0.8f, 0), playerBody.getWorldCenter(), true);
     }
