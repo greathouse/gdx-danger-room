@@ -37,7 +37,7 @@ public class Box2dScreen implements Screen {
     mapRenderer = new GreenMoonTiledRenderer("gunner/Room1.tmx", game);
 
     definePlayer();
-    rizer = new BillRizer(new Texture(Gdx.files.internal("contra/Contra3Players.png")));
+    rizer = new BillRizer(game, new Texture(Gdx.files.internal("contra/Contra3Players.png")));
   }
 
   private void definePlayer() {
@@ -78,7 +78,7 @@ public class Box2dScreen implements Screen {
     game.setProjectionMatrix(hud.stage.getCamera());
     hud.stage.draw();
 
-    rizer.update(delta, game.fromBox2d(playerBody.getPosition().x), game.fromBox2d(playerBody.getPosition().y));
+    rizer.update(delta);
     game.doInBatch(new GreenMoonGame.BatchAction() {
       @Override
       public void execute(SpriteBatch batch) {

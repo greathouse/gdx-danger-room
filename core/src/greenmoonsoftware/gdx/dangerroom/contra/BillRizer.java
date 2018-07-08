@@ -6,9 +6,17 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import greenmoonsoftware.gdx.GreenMoonGame;
 
 public class BillRizer extends Sprite {
+  private final GreenMoonGame game;
+  private Body playerBody;
   private Texture spriteSheet;
   private float stateTimer = 0f;
   private Animation<TextureRegion> run;
@@ -20,8 +28,16 @@ public class BillRizer extends Sprite {
   private Animation<TextureRegion> die;
   private float x, y;
 
-  public BillRizer(Texture spriteSheet) {
+
+
+  public BillRizer(GreenMoonGame game, Texture spriteSheet) {
+    this.game = game;
     this.spriteSheet = spriteSheet;
+    defineAnimations();
+    playerBody = defineBody();
+  }
+
+  private void defineAnimations() {
     standingShooting();
     jumping();
     running();
@@ -101,8 +117,10 @@ public class BillRizer extends Sprite {
     return new TextureRegion(this.spriteSheet, x, y, width, height);
   }
 
-  public BillRizer update(float delta, float x, float y) {
-    setBounds(x - getWidth() / 2,y - getHeight() / 2,1,1);
+  public BillRizer update(float delta) {
+    float bodyx = game.fromBox2d(playerBody.getPosition().x);
+    float bodyy = game.fromBox2d(playerBody.getPosition().y);
+    setBounds(bodyx - getWidth() / 2,bodyy - getHeight() / 2,1,1);
     setOriginCenter();
     setRegion(getFrame(delta));
     this.x = 10 - getWidth() / 2;
@@ -112,7 +130,6 @@ public class BillRizer extends Sprite {
   }
 
   public void render(SpriteBatch batch) {
-//    runningShooting.getKeyFrame().getRegionWidth()
     stateTimer += Gdx.graphics.getDeltaTime();
     TextureRegion currentFrame = shootingDownDiagonal.getKeyFrame(stateTimer, true);
     batch.draw(currentFrame, x, y, 1, 1);
@@ -121,6 +138,48 @@ public class BillRizer extends Sprite {
   private TextureRegion getFrame(float delta) {
     stateTimer += delta;
     return run.getKeyFrame(stateTimer, true);
+  }
+
+  private Body defineBody() {
+    BodyDef def = new BodyDef();
+    def.type = BodyDef.BodyType.DynamicBody;
+    def.position.set(1, 2);
+    def.fixedRotation = true;
+    Body body = game.createBody(def);
+
+    PolygonShape shape = new PolygonShape();
+    shape.setAsBox(.5f, .5f);
+
+    FixtureDef fixtureDef = new FixtureDef();
+    fixtureDef.shape = shape;
+    fixtureDef.density = 0.5f;
+    fixtureDef.friction = 0.5f;
+    body.createFixture(fixtureDef);
+    shape.dispose();
+    return body;
+  }
+
+  public BillRizer moveRight() {
+    if (playerBody.getLinearVelocity().x <= 5) {
+      playerBody.applyLinearImpulse(new Vector2(0.8f, 0), playerBody.getWorldCenter(), true);
+    }
+    return this;
+  }
+
+  public BillRizer moveLeft() {
+    if (playerBody.getLinearVelocity().x >= -5) {
+      playerBody.applyLinearImpulse(new Vector2(-0.8f, 0), playerBody.getWorldCenter(), true);
+    }
+    return this;
+  }
+
+  public BillRizer jump() {
+    playerBody.applyLinearImpulse(new Vector2(0f, 4f), playerBody.getWorldCenter(), true);
+    return this;
+  }
+
+  public Vector2 getPosition() {
+    return playerBody.getPosition();
   }
 
   @Override

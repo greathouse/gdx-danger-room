@@ -27,7 +27,7 @@ public class FirstRoomScreen implements Screen {
 
     gamePort = new FitViewport(400 / 100, 245 / 100, camera);
 
-    rizer = new BillRizer(new Texture(Gdx.files.internal("contra/Contra3Players.png")));
+    rizer = new BillRizer(game, new Texture(Gdx.files.internal("contra/Contra3Players.png")));
   }
 
   @Override
@@ -48,7 +48,7 @@ public class FirstRoomScreen implements Screen {
   }
 
   private void update(float delta) {
-    rizer.update(delta, 100, 100);
+    rizer.update(delta);
   }
 
   @Override
