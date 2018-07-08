@@ -5,20 +5,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.*;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
 
 public class Box2dScreen implements Screen {
 
-  public static final int PPM = 32;
   private final GreenMoonGame game;
   private final OrthographicCamera camera;
   private final Box2DDebugRenderer debugRenderer;
   private final Hud hud;
 
-  GreenMoonTiledRenderer mapRenderer;
+  private GreenMoonTiledRenderer mapRenderer;
 
   private Body playerBody;
 
@@ -45,12 +43,12 @@ public class Box2dScreen implements Screen {
   private Body defineSquare() {
     BodyDef def = new BodyDef();
     def.type = BodyDef.BodyType.DynamicBody;
-    def.position.set(toBox2d(100), toBox2d(50));
+    def.position.set(game.toBox2d(100), game.toBox2d(50));
     def.fixedRotation = true;
     Body body = game.createBody(def);
 
     PolygonShape shape = new PolygonShape();
-    shape.setAsBox(toBox2d(32 / 2), toBox2d(32 / 2));
+    shape.setAsBox(game.toBox2d(32 / 2), game.toBox2d(32 / 2));
 
     FixtureDef fixtureDef = new FixtureDef();
     fixtureDef.shape = shape;
@@ -76,7 +74,7 @@ public class Box2dScreen implements Screen {
     game.setProjectionMatrix(hud.stage.getCamera());
     hud.stage.draw();
 
-    debugRenderer.render(game.getWorld(), scale(camera.combined));
+    debugRenderer.render(game.getWorld(), game.scale(camera.combined));
     //Step at the end of the render method
     game.step(1/60f, 6, 2);
   }
@@ -97,23 +95,11 @@ public class Box2dScreen implements Screen {
   }
 
   private void updateCamera() {
-    camera.position.x = fromBox2d(playerBody.getPosition().x);
-    camera.position.y = fromBox2d(playerBody.getPosition().y);
+    camera.position.x = game.fromBox2d(playerBody.getPosition().x);
+    camera.position.y = game.fromBox2d(playerBody.getPosition().y);
     camera.update();
 
     mapRenderer.render(camera);
-  }
-
-  private float toBox2d(float m) {
-    return m / PPM;
-  }
-
-  private float fromBox2d(float m) {
-    return m * PPM;
-  }
-
-  private Matrix4 scale(Matrix4 combined) {
-    return combined.scl(PPM);
   }
 
   @Override

@@ -10,14 +10,14 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 
-import static greenmoonsoftware.gdx.dangerroom.Box2dScreen.PPM;
-
 public class GreenMoonTiledRenderer {
+  private final GreenMoonGame game;
   private final World world;
   private TiledMap map;
   private TiledMapRenderer tiledMapRenderer;
 
   public GreenMoonTiledRenderer(String resource, GreenMoonGame game) {
+    this.game = game;
     map = new TmxMapLoader().load(resource);
     this.world = game.getWorld();
     tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
@@ -41,11 +41,11 @@ public class GreenMoonTiledRenderer {
       Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
       bdef.type = BodyDef.BodyType.StaticBody;
-      bdef.position.set((rect.getX() + rect.getWidth() / 2) / PPM, (rect.getY() + rect.getHeight() / 2) / PPM);
+      bdef.position.set(game.toBox2d(rect.getX() + rect.getWidth() / 2), game.toBox2d(rect.getY() + rect.getHeight() / 2));
 
       body = world.createBody(bdef);
 
-      shape.setAsBox(rect.getWidth() / 2 / PPM, rect.getHeight() / 2 / PPM);
+      shape.setAsBox(game.toBox2d(rect.getWidth() / 2), game.toBox2d(rect.getHeight() / 2));
       fdef.shape = shape;
       body.createFixture(fdef);
     }
