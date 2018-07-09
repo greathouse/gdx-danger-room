@@ -23,7 +23,7 @@ public class BillRizer extends Sprite {
   private Animation<TextureRegion> standingShooting;
   private Animation<TextureRegion> jumping;
   private Animation<TextureRegion> runningShooting;
-  private Animation<TextureRegion> shootingUpDiaganol;
+  private Animation<TextureRegion> shootingUpDiagonal;
   private Animation<TextureRegion> shootingDownDiagonal;
   private Animation<TextureRegion> die;
   private Animation<TextureRegion> stand;
@@ -32,7 +32,26 @@ public class BillRizer extends Sprite {
   private float x, y;
 
   private boolean isRight = true;
+  private MovementState movementState = MovementState.STANDING;
+  private GunState gunState = GunState.NONE;
+  private GunDirection gunDirection = GunDirection.STRAIGHT;
 
+  private enum MovementState {
+    STANDING,
+    JUMPING,
+    RUNNING,
+    PRONE,
+    CLIMBING,
+    SHOW_BOATING
+  }
+
+  private enum GunState {
+    NONE, SHOOTING
+  }
+
+  private enum GunDirection {
+    STRAIGHT, UP, DOWN, UP_DIAGONAL, DOWN_DIAGONAL
+  }
 
   public BillRizer(GreenMoonGame game, Texture spriteSheet) {
     this.game = game;
@@ -75,7 +94,7 @@ public class BillRizer extends Sprite {
   }
 
   private void shootingUpDiaganol() {
-    shootingUpDiaganol = animation(0.18f,
+    shootingUpDiagonal = animation(0.18f,
       region(8, 170, 28, 46),
       region(47, 170, 23, 46),
       region(70, 172, 28, 46),
@@ -142,7 +161,7 @@ public class BillRizer extends Sprite {
 
   public void render(SpriteBatch batch) {
     stateTimer += Gdx.graphics.getDeltaTime();
-    TextureRegion currentFrame = currentAnimation.getKeyFrame(stateTimer, true);
+    TextureRegion currentFrame = getCurrentAnimation().getKeyFrame(stateTimer, true);
     if (currentFrame.isFlipX() && isRight) {
       currentFrame.flip(true, false);
     }
@@ -150,6 +169,36 @@ public class BillRizer extends Sprite {
       currentFrame.flip(true, false);
     }
     batch.draw(currentFrame, x, y, 1, 1);
+  }
+
+  private Animation<TextureRegion> getCurrentAnimation() {
+    MovementState movementState = getMovementState();
+    if (movementState.equals(MovementState.STANDING)) {
+      if (gunState.equals(GunState.SHOOTING)) {
+        return standingShooting;
+      }
+      return stand;
+    }
+    if (movementState.equals(MovementState.JUMPING)) {
+      return jumping;
+    }
+    if (movementState.equals(MovementState.RUNNING)) {
+      if (gunState.equals(GunState.SHOOTING)) {
+        return runningShooting;
+      }
+      return run;
+    }
+    return stand;
+  }
+
+  private MovementState getMovementState() {
+    if (playerBody.getLinearVelocity().y != 0) {
+      return MovementState.JUMPING;
+    }
+    if (playerBody.getLinearVelocity().x != 0) {
+      return MovementState.RUNNING;
+    }
+    return MovementState.STANDING;
   }
 
   private TextureRegion getFrame(float delta) {
@@ -196,6 +245,16 @@ public class BillRizer extends Sprite {
 
   public BillRizer jump() {
     playerBody.applyLinearImpulse(new Vector2(0f, 4f), playerBody.getWorldCenter(), true);
+    return this;
+  }
+
+  public BillRizer shooting() {
+    gunState = GunState.SHOOTING;
+    return this;
+  }
+
+  public BillRizer notShooting() {
+    gunState = GunState.NONE;
     return this;
   }
 

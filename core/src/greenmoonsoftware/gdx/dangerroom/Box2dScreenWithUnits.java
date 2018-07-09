@@ -77,6 +77,12 @@ public class Box2dScreenWithUnits implements Screen {
     if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
       rizer.jump();
     }
+    if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+      rizer.shooting();
+    }
+    if (!Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+      rizer.notShooting();
+    }
   }
 
   private void updateCamera() {
