@@ -20,11 +20,9 @@ public class BillRizer extends Sprite {
   private float stateTimer = 0f;
 
   private Animations animations;
-  private Animation<TextureRegion> currentAnimation;
   private float x, y;
 
   private boolean isRight = true;
-  private MovementState movementState = MovementState.STANDING;
   private GunState gunState = GunState.NONE;
   private GunDirection gunDirection = GunDirection.STRAIGHT;
 
@@ -48,7 +46,6 @@ public class BillRizer extends Sprite {
   public BillRizer(GreenMoonGame game, Texture spriteSheet) {
     this.game = game;
     this.animations = new Animations(spriteSheet);
-    currentAnimation = animations.getStand();
     playerBody = defineBody();
   }
 
