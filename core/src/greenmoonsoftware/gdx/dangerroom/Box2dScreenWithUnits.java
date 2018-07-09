@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
-import greenmoonsoftware.gdx.dangerroom.contra.BillRizer;
+import greenmoonsoftware.gdx.dangerroom.contra.bill.BillRizer;
 
 public class Box2dScreenWithUnits implements Screen {
 

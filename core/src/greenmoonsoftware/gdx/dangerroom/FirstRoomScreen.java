@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import greenmoonsoftware.gdx.GreenMoonGame;
-import greenmoonsoftware.gdx.dangerroom.contra.BillRizer;
+import greenmoonsoftware.gdx.dangerroom.contra.bill.BillRizer;
 
 public class FirstRoomScreen implements Screen {
   private final GreenMoonGame game;

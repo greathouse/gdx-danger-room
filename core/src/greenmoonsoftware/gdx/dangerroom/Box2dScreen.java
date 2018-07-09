@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.*;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
-import greenmoonsoftware.gdx.dangerroom.contra.BillRizer;
+import greenmoonsoftware.gdx.dangerroom.contra.bill.BillRizer;
 
 public class Box2dScreen implements Screen {
 
