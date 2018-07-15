@@ -3,12 +3,10 @@ package greenmoonsoftware.gdx.dangerroom;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
 import greenmoonsoftware.gdx.dangerroom.contra.bill.BillRizer;
@@ -17,8 +15,6 @@ public class Box2dScreenWithUnits implements Screen {
 
   private final GreenMoonGame game;
   private final OrthographicCamera camera;
-
-  private final Hud hud;
 
   private GreenMoonTiledRenderer mapRenderer;
 
@@ -30,8 +26,6 @@ public class Box2dScreenWithUnits implements Screen {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 20, 10);
     camera.update();
-
-    hud = new Hud(game, 20, 10);
 
     mapRenderer = new GreenMoonTiledRenderer("gunner/Room2.tmx", game);
 
@@ -51,8 +45,6 @@ public class Box2dScreenWithUnits implements Screen {
 
     update(delta);
 
-    hud.stage.draw();
-
     rizer.update(delta);
     game.doInBatch(new GreenMoonGame.BatchAction() {
       @Override
@@ -67,7 +59,6 @@ public class Box2dScreenWithUnits implements Screen {
 
   private void update(float delta) {
     updateCamera();
-    hud.update(delta);
 
     if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
       rizer.moveRight();
@@ -115,6 +106,5 @@ public class Box2dScreenWithUnits implements Screen {
 
   @Override
   public void dispose() {
-    hud.dispose();
   }
 }
