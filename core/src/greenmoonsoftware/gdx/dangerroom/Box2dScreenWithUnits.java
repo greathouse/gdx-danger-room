@@ -19,7 +19,7 @@ public class Box2dScreenWithUnits implements Screen {
   private GreenMoonTiledRenderer mapRenderer;
 
   private BillRizer rizer;
-  private final StagelessHud hud;
+  private final StageHud stageHud;
 
   public Box2dScreenWithUnits(GreenMoonGame game) {
     this.game = game.enableDebugRendering().setScale(1);
@@ -31,7 +31,7 @@ public class Box2dScreenWithUnits implements Screen {
     mapRenderer = new GreenMoonTiledRenderer("gunner/Room2.tmx", game);
 
     rizer = new BillRizer(game, new Texture(Gdx.files.internal("contra/Contra3Players.png")));
-    hud = new StagelessHud();
+    stageHud = new StageHud();
   }
 
   @Override
@@ -47,7 +47,7 @@ public class Box2dScreenWithUnits implements Screen {
 
     update(delta);
 
-    hud.render();
+    stageHud.render();
     rizer.update(delta);
     game.doInBatch(new GreenMoonGame.BatchAction() {
       @Override
