@@ -46,7 +46,7 @@ public class Hud implements Disposable{
     //setup the HUD viewport using a new camera seperate from our gamecam
     //define our stage using that viewport and our games spritebatch
     viewport = new FitViewport(width, height, new OrthographicCamera());
-    stage = new Stage(viewport, game.getBatch());
+    stage = new Stage(viewport);
 
     //define a table used to organize our hud's labels
     Table table = new Table();

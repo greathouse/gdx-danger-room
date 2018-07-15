@@ -3,10 +3,12 @@ package greenmoonsoftware.gdx.dangerroom;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
 import greenmoonsoftware.gdx.dangerroom.contra.bill.BillRizer;
@@ -46,7 +48,6 @@ public class Box2dScreenWithUnits implements Screen {
     Gdx.gl.glClearColor(0, 0, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     game.setProjectionMatrix(camera);
-    game.setProjectionMatrix(hud.stage.getCamera());
 
     update(delta);
 
@@ -60,7 +61,7 @@ public class Box2dScreenWithUnits implements Screen {
       }
     });
 
-    game.render(camera);
+    game.render(this.camera);
     game.step(Gdx.graphics.getDeltaTime(), 6, 2);
   }
 

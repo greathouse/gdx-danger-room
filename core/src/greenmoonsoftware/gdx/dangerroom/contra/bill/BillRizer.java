@@ -54,8 +54,8 @@ public class BillRizer extends Sprite {
     float bodyy = game.fromBox2d(playerBody.getPosition().y);
     setBounds(bodyx - getWidth() / 2,bodyy - getHeight() / 2,1,1);
     setOriginCenter();
-    this.x = 10 - getWidth() / 2;
-    this.y = 5 - getHeight() / 2;
+    this.x = bodyx - getWidth() / 2;
+    this.y = bodyy - getHeight() / 2;
 
     return this;
   }
