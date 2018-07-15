@@ -23,7 +23,7 @@ public class StagelessHud {
     float cameraViewPortWidth = 1024; // Set the size of the viewport for the text to something big
     float cameraViewPortHeight = cameraViewPortWidth * aspectRatio;
     textCamera = new OrthographicCamera(cameraViewPortWidth, cameraViewPortHeight);
-    font = buildFont("pdark.ttf", 8, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890\"!`?'.,;:()[]{}<>|/@\\^$-%+=#_&~*");
+    font = buildFont("pdark.ttf", 32, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890\"!`?'.,;:()[]{}<>|/@\\^$-%+=#_&~*");
   }
 
   private static BitmapFont buildFont(String filename, int size, String characters) {
@@ -48,7 +48,7 @@ public class StagelessHud {
 
     batch.begin();
     batch.setProjectionMatrix(textCamera.combined);
-    font.draw(batch, "ABC", 0 ,0);
+    font.draw(batch, "ABC", 300 ,300);
 
     batch.end();
   }
