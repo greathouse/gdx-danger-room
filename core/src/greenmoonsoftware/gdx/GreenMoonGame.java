@@ -16,6 +16,7 @@ public abstract class GreenMoonGame extends Game {
   private int scale = 32;
 
   private Box2DDebugRenderer debugRenderer;
+  private DebugHud debugHud;
   private boolean isDebugRendererEnabled = false;
 
   protected void onDispose(){}
@@ -42,12 +43,14 @@ public abstract class GreenMoonGame extends Game {
     batch = new SpriteBatch();
     world = createWorld();
     debugRenderer = new Box2DDebugRenderer();
+    debugHud = new DebugHud();
     onCreate();
   }
 
   public void render(Camera camera) {
     if (isDebugRendererEnabled) {
       debugRenderer.render(world, scale(camera.combined));
+      debugHud.render();
     }
   }
 
@@ -57,6 +60,10 @@ public abstract class GreenMoonGame extends Game {
 
   public Body createBody(BodyDef def) {
     return world.createBody(def);
+  }
+
+  public void addToDebug(String name, Body body) {
+    debugHud.add(name, body);
   }
 
   public void step(float v, int i, int i1) {

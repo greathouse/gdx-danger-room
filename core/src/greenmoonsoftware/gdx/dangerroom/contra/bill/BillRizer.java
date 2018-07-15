@@ -118,6 +118,7 @@ public class BillRizer extends Sprite {
     fixtureDef.friction = 0.5f;
     body.createFixture(fixtureDef);
     shape.dispose();
+    game.addToDebug("Bill", body);
     return body;
   }
 

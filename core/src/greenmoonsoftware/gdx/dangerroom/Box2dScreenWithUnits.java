@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import greenmoonsoftware.gdx.DebugHud;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
 import greenmoonsoftware.gdx.dangerroom.contra.bill.BillRizer;
@@ -19,7 +20,7 @@ public class Box2dScreenWithUnits implements Screen {
   private GreenMoonTiledRenderer mapRenderer;
 
   private BillRizer rizer;
-  private final StageHud stageHud;
+  private final DebugHud stageHud;
 
   public Box2dScreenWithUnits(GreenMoonGame game) {
     this.game = game.enableDebugRendering().setScale(1);
@@ -31,7 +32,7 @@ public class Box2dScreenWithUnits implements Screen {
     mapRenderer = new GreenMoonTiledRenderer("gunner/Room2.tmx", game);
 
     rizer = new BillRizer(game, new Texture(Gdx.files.internal("contra/Contra3Players.png")));
-    stageHud = new StageHud();
+    stageHud = new DebugHud();
   }
 
   @Override
