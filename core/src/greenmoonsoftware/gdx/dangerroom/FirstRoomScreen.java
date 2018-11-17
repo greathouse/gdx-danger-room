@@ -8,17 +8,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import greenmoonsoftware.gdx.GreenMoonGame;
+import greenmoonsoftware.gdx.GreenMoonBox2dGame;
 import greenmoonsoftware.gdx.dangerroom.contra.bill.BillRizer;
 
 public class FirstRoomScreen implements Screen {
-  private final GreenMoonGame game;
+  private final GreenMoonBox2dGame game;
   private OrthographicCamera camera;
   private Viewport gamePort;
 
   private BillRizer rizer;
 
-  public FirstRoomScreen(GreenMoonGame game) {
+  public FirstRoomScreen(GreenMoonBox2dGame game) {
     this.game = game;
 
     camera = new OrthographicCamera();
@@ -39,7 +39,7 @@ public class FirstRoomScreen implements Screen {
 
     game.setProjectionMatrix(camera);
 
-    game.doInBatch(new GreenMoonGame.BatchAction() {
+    game.doInBatch(new GreenMoonBox2dGame.BatchAction() {
       @Override
       public void execute(SpriteBatch batch) {
         rizer.render(batch);

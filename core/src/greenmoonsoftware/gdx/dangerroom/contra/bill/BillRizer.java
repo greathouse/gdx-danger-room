@@ -11,10 +11,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import greenmoonsoftware.gdx.GreenMoonGame;
+import greenmoonsoftware.gdx.GreenMoonBox2dGame;
 
 public class BillRizer extends Sprite {
-  private final GreenMoonGame game;
+  private final GreenMoonBox2dGame game;
   private Body playerBody;
 
   private float stateTimer = 0f;
@@ -43,7 +43,7 @@ public class BillRizer extends Sprite {
     STRAIGHT, UP, DOWN, UP_DIAGONAL, DOWN_DIAGONAL
   }
 
-  public BillRizer(GreenMoonGame game, Texture spriteSheet) {
+  public BillRizer(GreenMoonBox2dGame game, Texture spriteSheet) {
     this.game = game;
     this.animations = new Animations(spriteSheet);
     playerBody = defineBody();

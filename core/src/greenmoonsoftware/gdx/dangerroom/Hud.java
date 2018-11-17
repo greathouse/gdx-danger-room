@@ -1,17 +1,15 @@
 package greenmoonsoftware.gdx.dangerroom;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import greenmoonsoftware.gdx.GreenMoonGame;
+import greenmoonsoftware.gdx.GreenMoonBox2dGame;
 
 /**
  * Created by brentaureli on 8/17/15.
@@ -36,7 +34,7 @@ public class Hud implements Disposable{
   private Label worldLabel;
   private Label marioLabel;
 
-  public Hud(GreenMoonGame game, int width, int height){
+  public Hud(GreenMoonBox2dGame game, int width, int height){
     //define our tracking variables
     worldTimer = 300;
     timeCount = 0;

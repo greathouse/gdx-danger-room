@@ -14,7 +14,6 @@ buildscript {
 }
 
 allprojects {
-    apply plugin: "eclipse"
     apply plugin: "idea"
 
     version = '1.0'
@@ -38,6 +37,9 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
+    def javaVersion = JavaVersion.VERSION_1_8
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 
     dependencies {
         compile project(":core")
@@ -52,15 +54,15 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java"
 
+    def javaVersion = JavaVersion.VERSION_1_8
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:1.8.1"
         
     }
-}
-
-tasks.eclipse.doLast {
-    delete ".project"
 }

@@ -11,12 +11,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class GreenMoonTiledRenderer {
-  private final GreenMoonGame game;
+  private final GreenMoonBox2dGame game;
   private final World world;
   private TiledMap map;
   private TiledMapRenderer tiledMapRenderer;
 
-  public GreenMoonTiledRenderer(String resource, GreenMoonGame game) {
+  public GreenMoonTiledRenderer(String resource, GreenMoonBox2dGame game) {
     this.game = game;
     map = new TmxMapLoader().load(resource);
     this.world = game.getWorld();

@@ -7,7 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import greenmoonsoftware.gdx.GreenMoonGame;
+import greenmoonsoftware.gdx.GreenMoonBox2dGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
 
 public class MarioLevel1Screen implements Screen, InputProcessor {
@@ -15,7 +15,7 @@ public class MarioLevel1Screen implements Screen, InputProcessor {
   OrthographicCamera camera;
   GreenMoonTiledRenderer mapRenderer;
 
-  public MarioLevel1Screen(GreenMoonGame game) {
+  public MarioLevel1Screen(GreenMoonBox2dGame game) {
     float w = Gdx.graphics.getWidth();
     float h = Gdx.graphics.getHeight();
 
