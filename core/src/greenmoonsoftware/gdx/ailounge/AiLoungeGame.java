@@ -10,6 +10,7 @@ import greenmoonsoftware.gdx.characters.Direction;
 public class AiLoungeGame extends GreenMoonGame {
   private BitmapFont font;
   private Character deadpool;
+  private Character jedi;
   private AiLoungeInputProcessor inputProcessor;
 
   public void onCreate() {
@@ -17,6 +18,7 @@ public class AiLoungeGame extends GreenMoonGame {
     this.setScreen(new PlainScreen(this));
 
     deadpool = new Character(this,"characters/deadpool.png", 300f, 300f);
+    jedi = new Character(this, "characters/jedi.png", 400f, 300f);
     inputProcessor = new AiLoungeInputProcessor();
 
     addKeyMaps();
@@ -25,6 +27,7 @@ public class AiLoungeGame extends GreenMoonGame {
 
   private void addKeyMaps() {
     addCharacterKeyMap(deadpool, Input.Keys.LEFT, Input.Keys.UP, Input.Keys.RIGHT, Input.Keys.DOWN);
+    addCharacterKeyMap(jedi, Input.Keys.A, Input.Keys.W, Input.Keys.D, Input.Keys.S);
   }
 
   private void addCharacterKeyMap(Character c, int left, int up, int right, int down) {
@@ -43,6 +46,6 @@ public class AiLoungeGame extends GreenMoonGame {
   public void render() {
     super.render();
     deadpool.render();
-
+    jedi.render();
   }
 }
