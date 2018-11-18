@@ -21,13 +21,13 @@ public class AiLoungeGame extends GreenMoonGame {
     jedi = new Character(this, "characters/jedi.png", 400f, 300f);
     inputProcessor = new AiLoungeInputProcessor();
 
-    addKeyMaps();
-    Gdx.input.setInputProcessor(inputProcessor);
+    setupInputProcessor();
   }
 
-  private void addKeyMaps() {
+  private void setupInputProcessor() {
     addCharacterKeyMap(deadpool, Input.Keys.LEFT, Input.Keys.UP, Input.Keys.RIGHT, Input.Keys.DOWN);
     addCharacterKeyMap(jedi, Input.Keys.A, Input.Keys.W, Input.Keys.D, Input.Keys.S);
+    Gdx.input.setInputProcessor(inputProcessor);
   }
 
   private void addCharacterKeyMap(Character c, int left, int up, int right, int down) {
