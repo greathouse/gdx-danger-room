@@ -19,7 +19,7 @@ public abstract class GreenMoonGame extends Game {
     return this;
   }
 
-  public GreenMoonGame doInBatch(GreenMoonBox2dGame.BatchAction action) {
+  public GreenMoonGame doInBatch(BatchAction action) {
     batch.begin();
     if (action != null)
       action.execute(batch);
@@ -42,4 +42,7 @@ public abstract class GreenMoonGame extends Game {
     batch.dispose();
   }
 
+  public interface BatchAction {
+    void execute(SpriteBatch batch);
+  }
 }

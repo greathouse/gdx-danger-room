@@ -2,7 +2,7 @@ package greenmoonsoftware.gdx.characters;
 
 import com.badlogic.gdx.Gdx;
 
-enum Direction {
+public enum Direction {
   STOP() {float[] move() {return new float[]{0,0};}},
   UP() {float[] move() {return new float[]{0,100 * Gdx.graphics.getDeltaTime()};}},
   DOWN() {float[] move() {return new float[]{0,-100 * Gdx.graphics.getDeltaTime()};}},

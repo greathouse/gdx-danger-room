@@ -3,27 +3,29 @@ package greenmoonsoftware.gdx.characters;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import greenmoonsoftware.gdx.GreenMoonGame;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class Character {
+  private final GreenMoonGame game;
   private Texture walkSheet;
-  private SpriteBatch spriteBatch;
   private float stateTime;
   private float x, y;
+  private Map<Integer, Consumer> keymap;
 
   private LinkedHashSet<Direction> activeDirections = new LinkedHashSet<Direction>();
   private Direction currentDirection = Direction.DOWN;
 
   private Map<Direction, Animation<TextureRegion>> directionAnimations = new HashMap<Direction, Animation<TextureRegion>>();
 
-  public Character(String resource, float startX, float startY) {
-    spriteBatch = new SpriteBatch();
+  public Character(GreenMoonGame game, String resource, float startX, float startY) {
+    this.game = game;
     stateTime = 0f;
     x = startX;
     y = startY;
@@ -44,14 +46,11 @@ public class Character {
     // Get current frame of animation for the current stateTime
     TextureRegion currentFrame = currentAnimation().getKeyFrame(stateTime, !activeDirections.isEmpty());
 
-    spriteBatch.begin();
-    spriteBatch.draw(currentFrame, x, y);
-    spriteBatch.end();
+    game.doInBatch(batch -> batch.draw(currentFrame, x, y));
   }
 
   public void dispose() {
     walkSheet.dispose();
-    spriteBatch.dispose();
   }
 
   private void updateLocation() {
@@ -73,12 +72,12 @@ public class Character {
     y += moves[1];
   }
 
-  void move(Direction d) {
+  public void move(Direction d) {
     currentDirection = d;
     activeDirections.add(d);
   }
 
-  void stop(Direction d) {
+  public void stop(Direction d) {
     activeDirections.remove(d);
   }
 

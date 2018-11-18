@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import greenmoonsoftware.gdx.DebugHud;
 import greenmoonsoftware.gdx.GreenMoonBox2dGame;
 import greenmoonsoftware.gdx.GreenMoonTiledRenderer;
@@ -50,12 +49,7 @@ public class Box2dScreenWithUnits implements Screen {
 
     stageHud.render();
     rizer.update(delta);
-    game.doInBatch(new GreenMoonBox2dGame.BatchAction() {
-      @Override
-      public void execute(SpriteBatch batch) {
-        rizer.render(batch);
-      }
-    });
+    game.doInBatch(batch -> rizer.render(batch));
 
     game.render(this.camera);
     game.step(Gdx.graphics.getDeltaTime(), 6, 2);

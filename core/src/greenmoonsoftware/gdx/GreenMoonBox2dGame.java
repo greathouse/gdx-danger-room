@@ -1,7 +1,6 @@
 package greenmoonsoftware.gdx;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -72,9 +71,5 @@ public abstract class GreenMoonBox2dGame extends GreenMoonGame {
   public GreenMoonBox2dGame setScale(int scale) {
     this.scale = scale;
     return this;
-  }
-
-  public interface BatchAction {
-    void execute(SpriteBatch batch);
   }
 }
