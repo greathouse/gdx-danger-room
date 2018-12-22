@@ -1,8 +1,11 @@
 package greenmoonsoftware.gdx.battlegrounds;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import greenmoonsoftware.gdx.GreenMoonGame;
+
+import java.util.LinkedHashSet;
 
 public class Player {
     private Texture texture;
@@ -10,6 +13,9 @@ public class Player {
 
     private int x;
     private int y;
+    private LinkedHashSet<Direction> activeDirections = new LinkedHashSet<Direction>();
+
+    private float stateTime;
 
 
     Player(GreenMoonGame game, int x, int y) {
@@ -24,6 +30,29 @@ public class Player {
     }
 
     public void render() {
+        stateTime += Gdx.graphics.getDeltaTime();
+        updateLocation();
         game.doInBatch(batch -> batch.draw(texture, x, y));
+    }
+
+    private void updateLocation() {
+        activeDirections.forEach(this::calculateLocation);
+    }
+
+    private void calculateLocation(Direction d) {
+        if (d == null){
+            return;
+        }
+        float[] moves = d.move();
+        x += moves[0];
+        y += moves[1];
+    }
+
+    public void move(Direction d) {
+        activeDirections.add(d);
+    }
+
+    public void stop(Direction d) {
+        activeDirections.remove(d);
     }
 }
