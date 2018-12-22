@@ -15,6 +15,7 @@ buildscript {
 
 allprojects {
     apply plugin: "idea"
+    apply plugin: "eclipse"
 
     version = '1.0'
     ext {
