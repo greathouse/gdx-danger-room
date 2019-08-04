@@ -10,7 +10,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 //		new LwjglApplication(new DangerRoomGame(), config);
-//		new LwjglApplication(new AiLoungeGame(), config);
-		new LwjglApplication(new BattleGroundsGame(), config);
+		new LwjglApplication(new AiLoungeGame(), config);
+//		new LwjglApplication(new BattleGroundsGame(), config);
 	}
 }
