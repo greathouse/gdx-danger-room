@@ -2,7 +2,10 @@ package greenmoonsoftware.gdx.ailounge;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.controllers.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.Array;
+import greenmoonsoftware.gdx.GreenMoonControllerLogger;
 import greenmoonsoftware.gdx.GreenMoonGame;
 import greenmoonsoftware.gdx.characters.Character;
 import greenmoonsoftware.gdx.characters.Direction;
@@ -28,6 +31,24 @@ public class AiLoungeGame extends GreenMoonGame {
     addCharacterKeyMap(deadpool, Input.Keys.LEFT, Input.Keys.UP, Input.Keys.RIGHT, Input.Keys.DOWN);
     addCharacterKeyMap(jedi, Input.Keys.A, Input.Keys.W, Input.Keys.D, Input.Keys.S);
     Gdx.input.setInputProcessor(inputProcessor);
+
+    controllers();
+  }
+
+
+  private void controllers() {
+    try {
+      Array<Controller> controllers = Controllers.getControllers();
+      if (controllers != null) {
+        for (Controller controller : controllers) {
+          System.out.println("Blahblah: " + controller.getName());
+          Gdx.app.log("Blah", controller.getName());
+          controller.addListener(new GreenMoonControllerLogger());
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void addCharacterKeyMap(Character c, int left, int up, int right, int down) {
@@ -48,4 +69,5 @@ public class AiLoungeGame extends GreenMoonGame {
     deadpool.render();
     jedi.render();
   }
+
 }

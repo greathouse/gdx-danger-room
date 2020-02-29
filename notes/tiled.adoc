@@ -1,0 +1,11 @@
+= Tiled
+
+== Layers
+
+=== Tile Layer
+
+Used for landscapes
+
+=== Object Layer
+
+Used for interactive items
